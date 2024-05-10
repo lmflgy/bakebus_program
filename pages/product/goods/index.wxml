@@ -1,0 +1,50 @@
+<m-header title="{{title}}"></m-header>
+<view class="goods-header">
+    <view class="goods-item">
+        <view class="goods-search">
+            <image class="icon" src="../../../image/search.png" />
+            <input class="input" type="text" maxlength="50" confirm-type="search" placeholder="搜索商品" value="{{goodsName}}" bindfocus="handleFocus" bindinput="handleInput" bindconfirm="handleSearch" />
+        </view>
+        <view class="goods-add" bindtap="goAdd">
+            <image class="icon" src="../../../image/add-round.png" />
+        </view>
+    </view>
+    <view class="goods-nav">
+        <view class="nav-item {{goodsStatus==1?'active':''}}" bindtap="change" data-status="1">在售产品</view>
+        <view class="nav-item {{goodsStatus==2?'active':''}}" bindtap="change" data-status="2">已下架</view>
+    </view>
+</view>
+<block wx:if="{{list!=null&&list.length>0}}">
+<view class="item" wx:for="{{list}}" wx:key="index">
+    <image class="photo" src="{{item.images}}" />
+    <view class="detail">
+        <text class="title">{{item.goodsName}}</text>
+        <text class="info">{{item.content}}</text>
+        <view class="totals" wx:if="{{item.isMore==1}}">¥{{item.oldPrice}}</view>
+        <view class="totals" wx:else>¥{{item.price}}</view>
+    </view>
+    <image bindtap="handleOper" data-index="{{index}}" class="oper" src="../../../image/more.png" />
+    <view class="oper-wrap {{item.IsOper?'active':''}}">
+        <image class="oper-back" src="../../../image/oper-back.png" />
+        <view class="oper-list">
+            <view class="oper-item" wx:if="{{goodsStatus==1}}" bindtap="updown" data-index="{{index}}" data-pid="{{item.pid}}" data-status="2">
+                <image class="icon" src="../../../image/down.png" />
+                <text class="text">下架</text>
+            </view>
+            <view class="oper-item" wx:else bindtap="updown" data-index="{{index}}" data-pid="{{item.pid}}" data-status="1">
+                <image class="icon" src="../../../image/up.png" />
+                <text class="text">上架</text>
+            </view>
+            <view class="oper-item" bindtap="edit" data-pid="{{item.pid}}" data-shop-id="{{item.shopId}}">
+                <image class="icon" src="../../../image/edit.png" />
+                <text class="text">编辑</text>
+            </view>
+            <view class="oper-item" bindtap="del" data-index="{{index}}" data-pid="{{item.pid}}">
+                <image class="icon" src="../../../image/delete.png" />
+                <text class="text">删除</text>
+            </view>
+        </view>
+    </view>
+</view>
+</block>
+<view class="oper-mask {{isOper?'active':''}}" bindtap="closeOper"></view>

@@ -1,0 +1,18 @@
+<m-header title="{{title}}"></m-header>
+<view class="nav">
+    <view class="nav-item {{item.value==status?'active':''}}" wx:for="{{nav}}" wx:key="index" bindtap="change" data-status="{{item.value}}">{{item.key}}</view>
+</view>
+<navigator hover-class="none" class="item" wx:for="{{list}}" wx:key="index" url="edit?vipId={{item.vipId}}">
+    <image class="headimg" src="{{item.avatar}}" />
+    <view class="detail">
+        <view class="name">
+            <text>{{item.vipName}}</text>
+        </view>
+        <text class="time">{{item.endTime}}</text>
+    </view>
+    <view class="edit">
+        <image class="arrow" src="../../image/arrow-right-mini.png" />
+    </view>
+</navigator>
+<image class="global__add" src="../../image/add.png" bindtap="edit" />
+<navigator hover-class="none" class="footer__btn" url="list">服务管理</navigator>

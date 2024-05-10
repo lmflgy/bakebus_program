@@ -1,0 +1,42 @@
+<m-header title="{{title}}"></m-header>
+<view class="page-line"></view>
+<navigator class="item" hover-class="none" url="banner/index">
+    <image class="icon" src="../../image/product-banner.png" />
+    <text class="text">轮播图管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator>
+<navigator class="item" hover-class="none" url="goods/index">
+    <image class="icon" src="../../image/product-updown.png" />
+    <text class="text">上下架管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator>
+<navigator class="item" hover-class="none" url="mode/index">
+    <image class="icon" src="../../image/product-mode.png" />
+    <text class="text">分类管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator>
+<!-- <navigator class="item" hover-class="none" url="two/index">
+    <image class="icon" src="../../image/product-mode.png" />
+    <text class="text">二级分类管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator> -->
+<navigator class="item" hover-class="none" url="clamp/index">
+    <image class="icon" src="../../image/product-jiaxin.png" />
+    <text class="text">夹心管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator>
+<navigator class="item" hover-class="none" url="over/index?type=1">
+    <image class="icon" src="../../image/product-over.png" />
+    <text class="text">尺寸售完管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator>
+<navigator class="item" hover-class="none" url="over/index?type=2">
+    <image class="icon" src="../../image/product-over.png" />
+    <text class="text">夹心售完管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator>
+<navigator class="item" hover-class="none" url="holiday/list">
+    <image class="icon" src="../../image/product-holiday.png" />
+    <text class="text">节假日管理</text>
+    <image class="arrow" src="../../image/arrow-right-gray.png" />
+</navigator>

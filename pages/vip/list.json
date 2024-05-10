@@ -1,0 +1,10 @@
+{
+    "usingComponents": {
+        "m-header": "/components/m-header/m-header"
+    },
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "服务详情",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 150
+}

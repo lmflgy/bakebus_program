@@ -1,0 +1,14 @@
+<m-header title="{{title}}"></m-header>
+<view class="form">
+    <view class="form-item" wx:for="{{list}}" wx:key="index" bindtap="update" data-index="{{index}}" data-pid="{{item.pid}}">
+        <view class="icon-wrap" catchtap="del" data-index="{{index}}" data-pid="{{item.pid}}">
+            <image class="icon" src="../../../image/jian.png" />
+        </view>
+        <text>{{item.holiday}}</text>
+        <view class="input">
+            <text class="text" wx:if="{{item.status == 1}}">已打开特定商品销售</text>
+            <image class="arrow" src="../../../image/arrow-right-mini.png" />
+        </view>
+    </view>
+</view>
+<view class="footer__btn" bindtap="add">新增节假日</view>

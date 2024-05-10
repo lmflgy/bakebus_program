@@ -1,0 +1,19 @@
+<m-header title="登录"></m-header>
+<view class="head">
+    <image class="logo" src="{{gv.url}}" />
+    <text class="title">欢迎登录烘焙小程序</text>
+</view>
+<view class="wrap">
+    <view class="item">
+        <image class="icon" src="../../image/login-account.png" />
+        <input type="text" maxlength="20" placeholder="请输入用户名" class="input" bindinput="inputAccount" value="{{Account}}" />
+    </view>
+    <view class="item">
+        <image class="icon" src="../../image/login-safe.png" />
+        <input type="password" maxlength="20" placeholder="请输入密码" class="input" bindinput="inputPassword" value="{{Password}}" />
+    </view>
+    <view class="btn" bindtap="login">登录</view>
+    <view class="tool">
+        <navigator hover-class="none" url="/pages/forget/index">— 忘记密码 —</navigator>
+    </view>
+</view>

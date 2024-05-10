@@ -1,0 +1,19 @@
+<m-header title="{{title}}"></m-header>
+<view class="form" wx:if="{{type==1}}">
+    <view class="form-item" wx:for="{{list}}" wx:key="index">
+        <text>{{item.name}}</text>
+        <view class="fi">
+            <text class="fi1" wx:if="{{item.status==1}}">已打开售完提醒</text>
+            <switch checked="{{item.status==1}}" bindchange="handleChange" data-index="{{index}}" />
+        </view>
+    </view>
+</view>
+<view class="form" wx:else>
+    <view class="form-item" wx:for="{{list}}" wx:key="index">
+        <text>{{item.sandwichName}}</text>
+        <view class="fi">
+            <text class="fi1" wx:if="{{item.status==1}}">已打开售完提醒</text>
+            <switch checked="{{item.status==1}}" bindchange="handleChange1" data-index="{{index}}" />
+        </view>
+    </view>
+</view>

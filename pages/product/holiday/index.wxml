@@ -1,0 +1,38 @@
+<m-header title="{{title}}"></m-header>
+<view class="form">
+    <view class="form-item">
+        <text class="label">节假日选择</text>
+        <picker class="input" mode="date" value="{{holiday}}" bindchange="handleDate">
+            <view class="input">
+                <text class="text">{{holiday}}</text>
+                <image class="arrow" src="../../../image/arrow-right-mini.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="form-item">
+        <text class="label">状态</text>
+        <view class="fi">
+            <text class="fi1" wx:if="{{status==1}}">已启用</text>
+            <switch checked="{{status==1}}" bindchange="handleChange" />
+        </view>
+    </view>
+</view>
+<view class="rel-goods">
+    <view class="rel-title">选择可购买商品</view>
+    <view class="goods-list">
+        <view class="goods-li" wx:for="{{goods}}" wx:key="index" bindtap="chooseImte" data-index="{{index}}">
+            <view class="goods-choose">
+                <image class="active" src="../../../image/choose-active.png" wx:if="{{item.IsChoose}}" />
+                <image class="none" src="../../../image/choose-none.png" wx:else />
+            </view>
+            <image class="goods-photo" src="{{item.images}}" mode="aspectFit"></image>
+            <view class="goods-detail">
+                <text class="title">{{item.goodsName}}</text>
+                <text class="info">{{item.content}}</text>
+                <view class="totals" wx:if="{{item.price}}">¥{{item.price}}</view>
+                <view class="totals" wx:else>¥{{item.mealPrice}}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="footer__btn" bindtap="submit">保存</view>

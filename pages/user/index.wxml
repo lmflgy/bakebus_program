@@ -1,0 +1,28 @@
+<m-header title="{{title}}"></m-header>
+<view class="wrap" wx:if="{{list!=null&&list.length>0}}">
+    <view class="item" wx:for="{{list}}" wx:key="index">
+        <view class="account">
+            <text class="label">账号</text>
+            <text>{{item.userid}}</text>
+        </view>
+        <view class="info">
+            <text>姓名{{item.username}}</text>
+            <text class="txt" wx:if="{{item.invitationCode}}">邀请码{{item.invitationCode}}</text>
+        </view>
+        <view class="btns">
+            <view class="btn" bindtap="goRole" data-pid="{{item.pid}}" data-index="{{index}}">
+                <image class="icon" src="../../image/user-role.png" />
+                <text>权限管理</text>
+            </view>
+            <view class="btn" bindtap="reset" data-pid="{{item.pid}}">
+                <image class="icon" src="../../image/user-pwd.png" />
+                <text>重置密码</text>
+            </view>
+            <view class="btn" bindtap="del" data-pid="{{item.pid}}" data-index="{{index}}">
+                <image class="icon" src="../../image/user-del.png" />
+                <text>删除账号</text>
+            </view>
+        </view>
+    </view>
+</view>
+<image class="global__add" src="../../image/add.png" bindtap="edit" />

@@ -1,0 +1,120 @@
+<wxs src="../../utils/filter.wxs" module="filter"></wxs>
+<m-header title="{{title}}"></m-header>
+<view class="page-line"></view>
+<view class="page-wrap">
+    <view class="page-tabs">
+        <view class="page-tabs-item {{index==line?'active':''}}" wx:for="{{lineData}}" wx:key="index">
+            <picker mode="date" value="{{day}}" end="{{today}}" bindchange="bindDay1Change" wx:if="{{index==0}}">
+                <view class="text">{{item}}</view>
+            </picker>
+            <picker mode="date" value="{{month}}" end="{{today}}" fields="month" bindchange="bindMonth1Change" wx:elif="{{index==1}}">
+                <view class="text">{{item}}</view>
+            </picker>
+            <picker mode="date" value="{{year}}" end="{{today}}" fields="year" bindchange="bindYear1Change" wx:else>
+                <view class="text">{{item}}</view>
+            </picker>
+        </view>
+        <view class="page-tabs-item {{line==3?'active':''}}" bindtap="bindOrderChange">
+            <view class="text">客户订单</view>
+        </view>
+    </view>
+    <block wx:if="{{line==3}}">
+    <view class="order-count">
+        <image class="user" src="../../image/count-user.png" />
+        <text>客户总数：</text>
+        <text class="num">{{userNum}}</text>
+        <text>人</text>
+        <image class="order" src="../../image/count-order.png" />
+        <text>订单总数：</text>
+        <text class="num">{{orderNum}}</text>
+        <text>个</text>
+    </view>
+    <view class="order-temp" wx:if="{{userList!=null&&userList.length>0}}">
+        <view class="order-user" wx:for="{{userList}}" wx:key="index">
+            <view class="user-item" bindtap="handleAction" data-index="{{index}}">
+                <image class="headimg" src="../../image/birthday-item.png" />
+                <view class="nickname">{{item.userName}}</view>
+                <text class="tel">{{item.phone}}</text>
+                <image class="arrow {{item.sel?'sel':''}}" src="../../image/count-arrow-dw.png" />
+            </view>
+            <view class="order-wrap" wx:if="{{item.goodsDetailVoList!=null&&item.goodsDetailVoList.length>0}}" style="{{item.height}}">
+                <view class="order-item" wx:for="{{item.goodsDetailVoList}}" wx:for-item="goods" wx:for-index="gid" wx:key="gid">
+                    <image class="photo" src="{{gv.img+goods.img}}" />
+                    <view class="detail">
+                        <text class="title">{{goods.name}}</text>
+                        <text class="tips">{{goods.content}}</text>
+                        <text class="price">¥{{goods.price}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    </block>
+    <block wx:else>
+    <view class="page-bd">
+        <image class="icon" src="../../image/data-total.png" />
+        <text wx:if="{{line==0}}">{{day}}</text>
+        <text wx:elif="{{line==1}}">{{month}}</text>
+        <text wx:else>{{year}}</text>
+        <text>交易金额：</text>
+        <text class="total">{{totals}}</text>
+        <text>元</text>
+    </view>
+    <view class="page-hd" wx:if="{{false}}">
+        <view class="lt">单日账单</view>
+        <picker mode="selector" value="{{day}}" range="{{days}}" bindchange="bindDayChange">
+            <view class="picker-wrap">
+                <text>{{days[day]}}</text>
+                <image class="arrow" src="../../image/arrow-down.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="page-bd" wx:if="{{false}}">
+        <image class="icon" src="../../image/data-totals.png" />
+        <text wx:if="{{istoday}}">今日订单营业额：</text>
+        <text wx:else>{{years[year]}}{{months[month]}}{{days[day]}}订单营业额：</text>
+        <text class="total">{{dayTotals}}</text>
+        <text>元</text>
+    </view>
+    <view class="page-hd" wx:if="{{false}}">
+        <view class="lt">月账单</view>
+        <picker mode="selector" value="{{month}}" range="{{months}}" bindchange="bindMonthChange">
+            <view class="picker-wrap">
+                <text>{{months[month]}}</text>
+                <image class="arrow" src="../../image/arrow-down.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="page-bd" wx:if="{{false}}">
+        <image class="icon" src="../../image/data-mouth.png" />
+        <text>{{years[year]}}{{months[month]}}营业额：</text>
+        <text class="total">{{monthTotals}}</text>
+        <text>元</text>
+    </view>
+    <view class="page-hd" wx:if="{{false}}">
+        <view class="lt">年度账单</view>
+        <picker mode="selector" value="{{year}}" range="{{years}}" bindchange="bindYearChange">
+            <view class="picker-wrap">
+                <text>{{years[year]}}</text>
+                <image class="arrow" src="../../image/arrow-down.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="page-bd" wx:if="{{false}}">
+        <image class="icon" src="../../image/data-total.png" />
+        <text>{{years[year]}}营业额：</text>
+        <text class="total">{{yearTotals}}</text>
+        <text>元</text>
+    </view>
+    <view class="page-hd" wx:if="{{false}}">
+        <view class="lt">{{lineData[line]}}</view>
+        <picker mode="selector" value="{{line}}" range="{{lineData}}" bindchange="bindLineChange">
+            <view class="picker-wrap">
+                <text>{{lineData[line]}}</text>
+                <image class="arrow" src="../../image/arrow-down.png" />
+            </view>
+        </picker>
+    </view>
+    <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandle"></canvas>
+    </block>
+</view>

@@ -1,0 +1,267 @@
+<m-header title="{{title}}"></m-header>
+<view class="form" wx:if="{{model!=null}}">
+    <view class="form-item">
+        <input type="text" class="goods-name" placeholder="请输入产品标题" maxlength="20" value="{{model.goodsName}}" bindinput="handleInput" />
+    </view>
+    <view class="form-content">
+        <textarea class="goods-content" placeholder="请输入产品简介" maxlength="100" value="{{model.content}}" bindinput="handleContent"></textarea>
+    </view>
+    <view class="form-photo">
+        <view class="photo">
+            <block wx:if="{{photoList!=null&&photoList.length>0}}">
+                <view class="photo-item" wx:for="{{photoList}}" wx:key="index">
+                    <view class="photo-close" bindtap="delPhoto" data-index="{{index}}">
+                        <image class="close" src="../../../image/delete.png" />
+                    </view>
+                    <image class="icon" src="{{gv.img+item}}" bindtap="showPrev" data-index="{{index}}" />
+                </view>            
+            </block>
+            <view class="photo-item" bindtap="upload" wx:if="{{photoList.length < 9}}">
+                <image class="add" src="../../../image/caream.png" />
+            </view>
+        </view>
+        <view class="photo-tips">* 请上传334px * 305px大小的产品图片，最多9张</view>
+    </view>
+    <view class="form-item">
+        <text class="label">产品排序</text>
+        <input type="text" class="goods-sort" placeholder="请输入产品排序" maxlength="8" value="{{model.sort}}" bindinput="handleSort" />
+    </view>
+    <view class="form-item" wx:if="{{false}}">
+        <text class="label">产品分类</text>
+        <picker mode="selector" range="{{mode}}" range-key="name" class="input" value="{{currentModeIndex}}" bindchange="handleMode">
+            <view class="input">
+                <text class="text {{currentModeIndex==null?'place':''}}">{{currentModeIndex==null?'请选择':mode[currentModeIndex].name}}</text>
+                <image class="arrow" src="../../../image/arrow-right-mini.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="form-item">
+        <text class="label">产品分类</text>
+        <view class="input" bindtap="handleTypeOpen">
+            <view class="text" wx:if="{{typeTips}}">{{typeTips}}</view>
+            <text class="text place" wx:else>请选择</text>
+            <image class="arrow" src="../../../image/arrow-right-mini.png" />
+        </view>
+    </view>
+    <view class="form-item">
+        <text class="label">产品类型</text>
+        <picker mode="selector" range="{{type}}" range-key="key" class="input" value="{{currentTypeIndex}}" bindchange="handleType">
+            <view class="input">
+                <text class="text {{currentTypeIndex==null?'place':''}}">{{currentTypeIndex==null?'请选择':type[currentTypeIndex].key}}</text>
+                <image class="arrow" src="../../../image/arrow-right-mini.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="form-item" wx:if="{{currentTypeIndex == 1}}">
+        <text class="label">关联商品</text>
+        <view class="input" bindtap="handleThali">
+            <text class="text" wx:if="{{relSelGoods != null && relSelGoods.length > 0}}">{{relSelGoods.length}}个商品</text>
+            <text class="text place" wx:else>请选择</text>
+            <image class="arrow" src="../../../image/arrow-right-mini.png" />
+        </view>
+    </view>
+    <view class="form-item">
+        <text class="label">是否快递</text>
+        <view class="input">
+            <switch checked="{{model.isWuliu==1}}" bindchange="handleSwitch" />
+        </view>
+    </view>
+    <view class="form-item">
+        <text class="label">是否单规格</text>
+        <view class="input">
+            <switch checked="{{model.isMore==1}}" bindchange="handleMore" />
+        </view>
+    </view>
+    <view class="form-item" wx:if="{{model.isWuliu == 1 && model.isMore == 1}}">
+        <text class="label">产品重量</text>
+        <view class="input">
+            <input type="digit" class="goods-sort" placeholder="请输入" maxlength="8" value="{{model.weight}}" bindinput="handleWeight" />
+            <text class="unit">kg</text>
+        </view>
+    </view>
+    <block wx:if="{{model.isMore==1}}">
+    <view class="form-item">
+        <text class="label">价格</text>
+        <view class="input">
+            <input type="digit" class="input-box" placeholder="请输入" maxlength="8" value="{{model.oldPrice}}" bindinput="handlePrice" />
+            <text class="unit">元</text>
+        </view>
+    </view>
+    <view class="form-item">
+        <text class="label">套餐价格</text>
+        <view class="input">
+            <input type="digit" class="input-box" placeholder="请输入" maxlength="8" value="{{model.mealPrice}}" bindinput="handleMealPrice" />
+            <text class="unit">元</text>
+        </view>
+    </view>
+    </block>
+</view>
+<view class="form" wx:if="{{model!=null&&model.isMore==0}}">
+    <view class="form-item">
+        <text class="label">产品规格</text>
+        <view class="form-number">
+            <view class="decrease" bindtap="handleDecrease"></view>
+            <view class="numberse">{{Num}}</view>
+            <input type="number" class="numberse" maxlength="2" value="{{Num}}" bindinput="handleNumberse" bindblur="confirmNumberse" wx:if="{{false}}" />
+            <view class="increase" bindtap="handleIncrease"></view>
+        </view>
+    </view>
+    <block wx:if="{{model.productSpecifications!=null&&model.productSpecifications.length>0}}">
+    <view class="form-specs" wx:for="{{model.productSpecifications}}" wx:key="index">
+        <view class="specs-li">
+            <view class="icon-wrap" bindtap="delSpecs" data-index="{{index}}">
+                <image class="icon" src="../../../image/jian.png" />
+            </view>
+            <text>规格名称</text>
+            <input type="text" class="input" placeholder="请输入" maxlength="20" value="{{item.groupName}}" bindinput="handleChildInput" data-index="{{index}}" data-key="groupName" />
+        </view>
+        <view class="specs-item">
+            <text class="label">夹心规格</text>
+            <view class="form-number">
+                <view class="decrease" bindtap="handleSpecsDecrease" data-index="{{index}}"></view>
+                <view class="numberse">{{item.Num}}</view>
+                <input type="number" class="numberse" maxlength="2" data-index="{{index}}" value="{{item.Num}}" bindinput="handleSpecsNumberse" bindblur="confirmSpecsNumberse" wx:if="{{false}}" />
+                <view class="increase" bindtap="handleSpecsIncrease" data-index="{{index}}"></view>
+            </view>
+        </view>
+        <block wx:if="{{item.sandwichList!=null&&item.sandwichList.length>0}}">
+        <block wx:for="{{item.sandwichList}}" wx:for-index="sid" wx:for-item="child" wx:key="sid">
+        <view class="specs-li">
+            <view class="icon-wrap"></view>
+            <view class="icon-wrap" bindtap="delSpecsItem" data-index="{{index}}" data-sid="{{sid}}">
+                <image class="icon" src="../../../image/jian.png" />
+            </view>
+            <text>夹心</text>
+            <view class="picker" bindtap="openSand" data-index="{{index}}" data-sid="{{sid}}">
+                <text class="text" wx:if="{{child.sandItem}}">{{child.sandItem}}</text>
+                <text class="text place" wx:else>请选择</text>
+                <image class="arrow" src="../../../image/arrow-right-mini.png" />
+            </view>
+        </view>
+        <view class="specs-li">
+            <view class="icon-wrap"></view>
+            <view class="icon-wrap"></view>
+            <text>产品价格</text>
+            <input type="digit" class="input" placeholder="请输入" maxlength="8" value="{{child.price}}" bindinput="handleChildSpecsInput" data-index="{{index}}" data-sid="{{sid}}" data-key="price" />
+            <text class="unit">元</text>
+        </view>
+        <view class="specs-li">
+            <view class="icon-wrap"></view>
+            <view class="icon-wrap"></view>
+            <text>夹心强提醒</text>
+            <view class="input">
+                <switch color="#333" checked="{{child.warnFlag==1}}" bindchange="handleChildSpecsSand" data-index="{{index}}" data-sid="{{sid}}" />
+            </view>
+        </view>
+        </block>
+        </block>
+        <view class="specs-li">
+            <view class="icon-wrap"></view>
+            <text>几人吃</text>
+            <input type="number" class="input" placeholder="请输入" maxlength="8" value="{{item.remark}}" bindinput="handleChildInput" data-index="{{index}}" data-key="remark" />
+        </view>
+        <view class="specs-li">
+            <view class="icon-wrap"></view>
+            <text>产品销量</text>
+            <input type="number" class="input" placeholder="请输入" maxlength="8" value="{{item.productSales}}" bindinput="handleChildInput" data-index="{{index}}" data-key="productSales" />
+        </view>
+    </view>
+    </block>
+</view>
+<view class="form">
+    <view class="form-item">
+        <text class="label">产品状态</text>
+        <picker mode="selector" range="{{status}}" range-key="key" class="input" value="{{currentStatusIndex}}" bindchange="handleStatus">
+            <view class="input">
+                <text class="text {{currentStatusIndex==null?'place':''}}">{{currentStatusIndex==null?'请选择':status[currentStatusIndex].key}}</text>
+                <image class="arrow" src="../../../image/arrow-right-mini.png" />
+            </view>
+        </picker>
+    </view>
+</view>
+<view class="footer__btn" bindtap="submit">保存</view>
+<!--类型选择-->
+<view class="pop-wrap {{isType?'active':''}}" catchtouchmove="{{returnfasle}}">
+    <view class="pop-mask" bindtap="handleTypeClose"></view>
+    <view class="pop__wrap">
+        <view class="pop__wrap-header">
+            <view class="header__btn cancel" bindtap="handleTypeClose">取消</view>
+            <view class="header__btn confirm" bindtap="confirmType">确定</view>
+        </view>
+        <scroll-view scroll-y="{{true}}" class="pop__wrap-wrap">
+            <view class="pop__data__item" wx:for="{{mode}}" wx:key="index" bindtap="chooseType" data-index="{{index}}">
+                <view class="text">{{item.name}}</view>
+                <image wx:if="{{item.IsChoose}}" class="icon" src="../../../image/checked.png" />
+                <text class="icon" wx:else></text>
+            </view>
+        </scroll-view>
+    </view>
+</view>
+<!--夹心选择-->
+<view class="pop-wrap {{isSand?'active':''}}" catchtouchmove="{{returnfasle}}">
+    <view class="pop-mask" bindtap="handleSand"></view>
+    <view class="pop__wrap">
+        <view class="pop__wrap-header">
+            <view class="header__btn cancel" bindtap="handleSand">取消</view>
+            <view class="header__btn confirm" bindtap="confirmSand">确定</view>
+        </view>
+        <scroll-view scroll-y="{{true}}" class="pop__wrap-wrap">
+            <view class="pop__data__item" wx:for="{{sand}}" wx:key="index" bindtap="chooseItem" data-index="{{index}}">
+                <view class="text">{{item.sandwichName}}</view>
+                <image wx:if="{{item.IsChoose}}" class="icon" src="../../../image/checked.png" />
+                <text class="icon" wx:else></text>
+            </view>
+        </scroll-view>
+    </view>
+</view>
+<!--套餐选择-->
+<view class="pop-wrap {{isThali?'active':''}}" catchtouchmove="returnfasle">
+    <view class="pop-mask" bindtap="handleThali"></view>
+    <view class="pop__product">
+        <view class="pop__wrap-header">
+            <view class="header__btn cancel" bindtap="handleThali">取消</view>
+            <view class="header__title">关联商品</view>
+            <view class="header__btn confirm" bindtap="confirmThali">确定</view>
+        </view>
+        <view class="pop__product-search">
+            <view class="search-box">
+                <image class="icon" src="../../../image/search.png" />
+                <input class="input" type="text" maxlength="50" confirm-type="search" placeholder="搜索商品" value="{{relGoodsName}}" bindfocus="handleRelFocus" bindinput="handleRelInput" bindconfirm="loadRelGoods" />
+            </view>
+            <view class="select-box" bindtap="handleSelect">
+                <text>已选{{relSelGoods.length}}</text>
+                <image class="icon {{isSelect?'open':''}}" src="../../../image/arrow-down-small.png" />
+            </view>
+            <scroll-view scroll-y="{{true}}" class="select-data {{isSelect?'active':''}}">
+                <view class="sel-item" wx:for="{{relSelGoods}}" wx:key="index">
+                    <image class="img" src="{{item.images}}" />
+                    <view class="det">
+                        <text class="title">{{item.goodsName}}</text>
+                        <view class="total">
+                            <text class="unit">套餐价¥</text>
+                            <text class="price">{{item.mealPrice}}</text>
+                            <view class="cancle" bindtap="handleRelCancle" data-index="{{index}}" data-type="{{1}}">取消选择</view>
+                        </view>
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+        <scroll-view scroll-y="{{true}}" bindtap="handleRelWrap" class="pop__product-wrap {{isSelect?'mf':''}}">
+            <view class="rel-item" wx:for="{{relGoods}}" wx:key="index" catchtap="handleRelChoose" data-index="{{index}}" data-type="{{0}}">
+                <view class="icon">
+                    <image class="ck" src="../../../image/rel-fill.png" wx:if="{{item.IsChoose}}" />
+                    <image class="ck" src="../../../image/rel-line.png" wx:else />
+                </view>
+                <image class="img" src="{{item.images}}" />
+                <view class="det">
+                    <text class="title">{{item.goodsName}}</text>
+                    <text class="info">{{item.content}}</text>
+                    <view class="total">
+                        <text class="unit">¥</text>
+                        <text class="price">{{item.mealPrice}}</text>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+</view>

@@ -1,0 +1,18 @@
+<m-header title="{{title}}"></m-header>
+<view class="form">
+    <view class="form-item">
+        <text>服务名称</text>
+        <input type="text" class="inputbox" placeholder="请输入" maxlength="20" value="{{serverName}}" data-key="serverName" bindinput="handleName" />
+    </view>
+    <view class="form-item">
+        <text>服务图片</text>
+        <view class="input">
+            <view class="upload" bindtap="upload">
+                <image class="icon" src="{{gv.img+Photo}}" wx:if="{{Photo}}" />
+                <text class="add" wx:else>+</text>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="delete__btn" bindtap="del" wx:if="{{serverId}}">删除服务</view>
+<view class="footer__btn" bindtap="submit">保存</view>

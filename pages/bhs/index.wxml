@@ -1,0 +1,44 @@
+<m-header title="{{title}}"></m-header>
+<view class="goods-header">
+    <view class="goods-item">
+        <view class="goods-time">
+            <picker mode="date" value="{{days}}" bindchange="bindDaySChange">
+                <view class="picker-wrap">
+                    <text class="text {{days?'':'place'}}">{{days?days:'开始日期'}}</text>
+                    <image class="arrow" src="../../image/arrow-down.png" />
+                </view>
+            </picker>
+        </view>
+        <view class="goods-time">
+            <picker mode="date" value="{{daye}}" bindchange="bindDayEChange">
+                <view class="picker-wrap">
+                    <text class="text {{daye?'':'place'}}">{{daye?daye:'结束日期'}}</text>
+                    <image class="arrow" src="../../image/arrow-down.png" />
+                </view>
+            </picker>
+        </view>
+    </view>
+</view>
+<view class="order-temp" wx:if="{{list!=null&&list.length>0}}">
+    <view class="order-user" wx:for="{{list}}" wx:key="index">
+        <view class="user-item" catchtap="handleAction" data-index="{{index}}">
+            <image class="headimg" src="../../image/birthday-item.png" />
+            <view class="nickname">{{item.userName}}</view>
+            <text class="tel">订单数量：{{item.num}}</text>
+            <image class="arrow {{item.sel?'sel':''}}" src="../../image/count-arrow-dw.png" />
+        </view>
+        <view class="order-wrap" wx:if="{{item.goodsDetailVoList!=null&&item.goodsDetailVoList.length>0}}" style="{{item.height}}">
+            <view class="order-item" wx:for="{{item.goodsDetailVoList}}" wx:for-item="goods" wx:for-index="gid" wx:key="gid" bindtap="goDetails" data-orderid="{{goods.orderId}}">
+                <image class="photo" src="{{goods.img}}" />
+                <view class="detail">
+                    <text class="no">{{goods.sortNo}}</text>
+                    <text class="title">{{goods.name}}</text>
+                    <text class="tips">{{goods.content}}</text>
+                    <text class="price">¥{{goods.price}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="nodata">到底了~</view>
+</view>
+<view class="nodata" wx:else>请选择开始结束日期进行筛选~默认显示当天的数据</view>

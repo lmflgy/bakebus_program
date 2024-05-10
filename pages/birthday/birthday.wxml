@@ -1,0 +1,21 @@
+<m-header title="{{title}}"></m-header>
+<navigator class="item" wx:for="{{list}}" wx:key="index" hover-class="none" url="update?pid={{item.pid}}&uid={{uid}}">
+    <view class="dot" wx:if="{{item.top==1}}"></view>
+    <image class="headimg" src="../../image/birthday-item.png" />
+    <view class="detail">
+        <view class="hd">
+            <view class="time">
+                <text>生日{{item.birthday}}</text>
+                <text wx:if="{{item.remindermethod==2&&item.lunarcalendar}}"> 农历{{item.lunarcalendar}}</text>
+            </view>
+        </view>
+        <view class="bd">
+            <text class="rel" wx:if="{{item.relationship}}">{{item.relationship}}</text>
+        </view>
+        <view class="bd" wx:if="{{item.message}}">{{item.message}}</view>
+    </view>
+    <view class="icon-wrap">
+        <image class="icon" src="../../image/arrow-right-mini.png" />
+    </view>
+</navigator>
+<image class="global__add" src="../../image/add.png" bindtap="edit" />

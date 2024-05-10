@@ -1,0 +1,10 @@
+<view class="m-header" style="height:{{navHeight}}px;padding-top:{{statusBarHeight}}px;background:{{bg}}">
+    <view class="btn" style="padding-top:{{statusBarHeight}}px" bindtap="back" wx:if="{{isback}}">
+        <image bindtap="goLogin" class="back-arrow" src="../../image/login-back.png" wx:if="{{login}}" />
+        <block wx:else>
+            <image bindtap="goBack" class="back-icon" src="../../image/back.png" wx:if="{{isback}}" />
+        </block>
+    </view>
+    <text class="title {{lt?'home':''}}">{{title}}</text>
+</view>
+<view class="m-header-line" style="height:{{navHeight}}px;" wx:if="{{line}}"></view>

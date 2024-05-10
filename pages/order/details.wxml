@@ -1,0 +1,106 @@
+<m-header title="{{title}}"></m-header>
+<view class="order-address">
+    <view class="order-address-head">
+        <text class="name">{{item.name}}</text>
+        <text class="tel">{{item.phone}}</text>
+        <image class="copy" src="../../image/copy.png" bindtap="copyAddress" />
+    </view>
+    <view class="order-address-detail" wx:if="{{item.orderType!=1 && item.orderType!=4}}">{{item.address}}</view>
+</view>
+<view class="order-wrap">
+    <view class="order-item">
+        <view class="order-head" wx:if="{{item.orderType==3}}">
+            <view class="order-ll">
+                <view class="title">快递订单{{item.orderNo}}</view>
+                <image class="copy" src="../../image/copy.png" bindtap="copyOrderNo" />
+            </view>
+        </view>
+        <view class="order-head" wx:else>
+            <view class="order-ll">
+              <!-- <view class="title">{{item.orderType==1?'自提':'配送'}}订单{{item.orderNo}}</view> -->
+                <view class="title"  wx:if="{{item.orderType==1}}">自提订单{{item.orderNo}}</view>
+                <view class="title"  wx:elif="{{item.orderType==4}}">堂食订单{{item.orderNo}}</view>
+                <view class="title" wx:else>配送订单{{item.orderNo}}</view>
+                <image class="copy" src="../../image/copy.png" bindtap="copyOrderNo" />
+            </view>
+            <text class="dz" wx:if="{{item.orderType==2&&item.shansongPrice}}">{{item.shansongPrice>=30 ? '打桩' : ''}}</text>
+        </view>
+        <view class="order-goods" wx:if="{{item.bakePickUpOrderDetailVos!=null&&item.bakePickUpOrderDetailVos.length>0}}">
+            <view class="goods-item" wx:for="{{item.bakePickUpOrderDetailVos}}" wx:for-item="goods" wx:for-index="goodsid" wx:key="goodsid">
+                <image class="photo" src="{{gv.img+goods.images}}" bindtap="showPrev0" data-src="{{gv.img+goods.images}}" />
+                <view class="detail">
+                    <view class="lt">
+                        <text class="gt">{{goods.goodsName}}</text>
+                        <text class="gs" wx:if="{{goods.goodsSpec}}">{{goods.goodsSpec}} {{goods.goodsSandwich}}</text>
+                        <text class="gs" wx:else>单品</text>
+                    </view>
+                    <view class="rt">
+                        <text class="gp">¥{{goods.price}}</text>
+                        <text class="gn">x{{goods.num}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="order-ss" wx:if="{{item.orderType==2}}">
+            <view>
+                <text>配送费：</text>
+                <text class="totals">¥{{item.shansongPrice}}</text>
+            </view>
+        </view>
+        <view class="order-totals">
+            <text>{{item.orderTime}}</text>
+            <view>
+                <text>共{{totalNum}}件商品 合计：</text>
+                <text class="totals">¥{{item.totalPrice}}</text>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="order-message">
+    <view class="order-msg-item" wx:if="{{item.decoratorName}}">
+        <text class="label">裱花师</text>
+        <text>{{item.decoratorName}}</text>
+    </view>
+    <view class="order-msg-item">
+        <text class="label">用户余额</text>
+        <text>¥{{item.balance}}</text>
+    </view>
+    <view class="order-msg-item">
+        <text class="label">下单时间</text>
+        <text>{{item.createTime}}</text>
+    </view>
+    <view class="order-msg-item" wx:if="{{item.orderType == 3}}">
+        <text class="label">快递费</text>
+        <text>¥{{item.shansongPrice}}</text>
+    </view>
+    <view class="order-msg-item" wx:if="{{item.orderType==3&&item.wuliuOrderNo}}">
+        <text class="label">快递单号</text>
+        <text class="value">{{item.wuliuOrderNo}}</text>
+        <image class="copy" src="../../image/copy.png" bindtap="copyWuliu" />
+    </view>
+    <view class="order-msg-item" wx:if="{{item.orderType==1}}">
+        <text class="label">取餐时间</text>
+        <text>{{item.pickuptime}}</text>
+    </view>
+    <view class="order-msg-item" wx:else>
+    <template wx:if="{{item.orderType==4}}">
+        <text class="label">预计送达时间</text>
+        <text>{{item.estimatedDeliveryTime}}</text>
+      </template>
+    </view>
+    <view class="order-msg-item">
+        <text class="label">餐具选择</text>
+        <text class="value">{{item.tableware}}</text>
+    </view>
+    <view class="order-msg-item">
+        <text class="label">贺卡内容</text>
+        <text class="value">{{item.greetingCard}}</text>
+    </view>
+    <view class="order-msg-item">
+        <text class="label">备注信息</text>
+        <text class="value">{{item.message}}</text>
+    </view>
+    <view class="photo-list">
+        <image class="photo-item" wx:for="{{path}}" wx:key="index" src="{{item}}" bindtap="showPrev" data-index="{{index}}" />
+    </view>
+</view>

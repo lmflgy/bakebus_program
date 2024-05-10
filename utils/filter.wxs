@@ -1,0 +1,14 @@
+var filter = {
+    changeNum: function (value) {
+        var big = ['一', '二', '三', '四', '五', '六', '七', '八', '九']
+        return big[value]
+    },
+    subStr: function (value, sIndex, eIndex) {
+        value += ''
+        return value.substring(sIndex, eIndex)
+    }
+}
+module.exports = {
+    changeNum: filter.changeNum,
+    subStr: filter.subStr
+}

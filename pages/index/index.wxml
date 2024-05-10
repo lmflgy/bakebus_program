@@ -1,0 +1,75 @@
+<m-header title="" lt="{{true}}" isback="{{false}}" line="{{false}}" bg="none"></m-header>
+<view class="head-wrap">
+    <image class="head-back" src="../../image/home-head.png" />
+    <image wx:if="{{model!=null}}" class="headimg" src="{{model.avatar?gv.img+model.avatar:'../../image/headimg.png'}}" />
+    <text wx:if="{{model!=null}}" class="nickname">{{model.name}}</text>
+    <text class="time">剩余使用时间：{{days}}天</text>
+</view>
+<view class="home-wrap">
+    <navigator class="home-item" hover-class="none" url="/pages/order/index" wx:if="{{isorder}}">
+        <image class="icon" src="../../image/home-order.png" />
+        <view class="detail">
+            <text class="title">订单管理</text>
+            <text class="tips">快速查看订单信息</text>
+        </view>
+        <image class="arrow" src="../../image/home-arrow-right.png" />
+    </navigator>
+    <navigator class="home-item" hover-class="none" url="/pages/count/index" wx:if="{{iscount}}">
+        <image class="icon" src="../../image/home-data.png" />
+        <view class="detail">
+            <text class="title">数据统计</text>
+            <text class="tips">订单营业额统计</text>
+        </view>
+        <image class="arrow" src="../../image/home-arrow-right.png" />
+    </navigator>
+    <navigator class="home-item" hover-class="none" url="/pages/bhs/index" wx:if="{{isbhs}}">
+        <image class="icon" src="../../image/home-data.png" />
+        <view class="detail">
+            <text class="title">裱花师订单统计</text>
+            <text class="tips">裱花师已完成订单统计</text>
+        </view>
+        <image class="arrow" src="../../image/home-arrow-right.png" />
+    </navigator>
+    <navigator class="home-item" hover-class="none" url="/pages/birthday/index" wx:if="{{isbirthday}}">
+        <image class="icon" src="../../image/home-birthday.png" />
+        <view class="detail">
+            <text class="title">生日提醒</text>
+            <text class="tips">一键提醒客户生日</text>
+        </view>
+        <image class="arrow" src="../../image/home-arrow-right.png" />
+    </navigator>
+    <navigator class="home-item" hover-class="none" url="/pages/vip/index" wx:if="{{isvip}}">
+        <image class="icon" src="../../image/home-vip.png" />
+        <view class="detail">
+            <text class="title">VIP会员</text>
+            <text class="tips">服务信息数量管理</text>
+        </view>
+        <image class="arrow" src="../../image/home-arrow-right.png" />
+    </navigator>
+    <navigator class="home-item" hover-class="none" url="/pages/product/index" wx:if="{{isproduct}}">
+        <image class="icon" src="../../image/home-product.png" />
+        <view class="detail">
+            <text class="title">产品管理</text>
+            <text class="tips">产品上下架</text>
+        </view>
+        <image class="arrow" src="../../image/home-arrow-right.png" />
+    </navigator>
+    <navigator class="home-item" hover-class="none" url="/pages/user/index" wx:if="{{isuser}}">
+        <image class="icon" src="../../image/home-user.png" />
+        <view class="detail">
+            <text class="title">用户管理</text>
+            <text class="tips">权限分配管理</text>
+        </view>
+        <image class="arrow" src="../../image/home-arrow-right.png" />
+    </navigator>
+</view>
+<view class="share__btn" bindtap="share" wx:if="{{isshare}}">生成分享二维码</view>
+<view class="delete__btn" bindtap="exit">安全退出</view>
+
+<view class="pop-code {{isCode ? 'active':''}}">
+    <view class="pop-mask" bindtap="close"></view>
+    <view class="pop-body">
+        <image class="code" mode="widthFix" src="https://admin.hzqz.cc/wx/getShareImg?pid={{userId}}" show-menu-by-longpress="{{true}}" />
+        <view class="code-tips">长按二维码保存到手机相册</view>
+    </view>
+</view>

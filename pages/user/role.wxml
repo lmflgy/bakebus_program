@@ -1,0 +1,19 @@
+<m-header title="权限管理"></m-header>
+<view class="wrap" wx:if="{{list!=null&&list.length>0}}">
+    <block wx:for="{{list}}" wx:key="index">
+    <view class="item {{item.children!=null&&item.children.length>0&&isUp?'active':''}}" bindtap="chooseItem" data-index="{{index}}">
+        <image class="icon" src="../../image/role-fill.png" wx:if="{{item.sel}}" />
+        <image class="icon" src="../../image/role-line.png" wx:else />
+        <text class="text">{{item.title}}</text>
+        <image class="arrow" src="../../image/role-up.png" wx:if="{{nav!=null&&nav.length>0}}" catchtap="handleUp" wx:if="{{item.children!=null&&item.children.length>0}}" />
+    </view>
+    <view class="child" wx:if="{{item.children!=null&&item.children.length>0}}" style="{{height}}">
+        <view class="li" wx:for="{{item.children}}" wx:for-item="child" wx:for-index="cid" wx:key="cid" bindtap="chooseChild" data-index="{{index}}" data-cid="{{cid}}">
+            <image class="icon" src="../../image/role-fill.png" wx:if="{{child.sel}}" />
+            <image class="icon" src="../../image/role-line.png" wx:else />
+            <text class="text">{{child.title}}</text>
+        </view>
+    </view>
+    </block>
+</view>
+<view class="footer__btn" bindtap="submitRole">确定</view>

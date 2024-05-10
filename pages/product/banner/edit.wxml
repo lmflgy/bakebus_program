@@ -1,0 +1,40 @@
+<m-header title="{{title}}"></m-header>
+<view class="page-title">轮播图</view>
+<view class="upload-wrap">
+    <view class="item" bindtap="upload" wx:if="{{Path}}">
+        <image class="photo" src="{{gv.img+Path}}" bindtap="upload" />
+    </view>
+    <view class="item" bindtap="upload" wx:else>
+        <text>+</text>
+    </view>
+</view>
+<view class="rel-goods">
+    <view class="rel-title">关联商品</view>
+    <view class="goods-list">
+        <view class="goods-li" wx:for="{{goods}}" wx:key="index" bindtap="chooseImte" data-index="{{index}}">
+            <view class="goods-choose">
+                <image class="active" src="../../../image/choose-active.png" wx:if="{{item.IsChoose}}" />
+                <image class="none" src="../../../image/choose-none.png" wx:else />
+            </view>
+            <image class="goods-photo" src="{{item.images}}" mode="aspectFit"></image>
+            <view class="goods-detail">
+                <text class="title">{{item.goodsName}}</text>
+                <text class="info">{{item.content}}</text>
+                <view class="totals">¥{{item.price}}</view>
+            </view>
+        </view>
+        <view class="goods-li" wx:for="{{goods}}" wx:key="index" bindtap="chooseImte" data-index="{{index}}">
+            <view class="goods-choose">
+                <image class="active" src="../../../image/choose-active.png" wx:if="{{item.IsChoose}}" />
+                <image class="none" src="../../../image/choose-none.png" wx:else />
+            </view>
+            <image class="goods-photo" src="{{item.images}}" mode="aspectFit"></image>
+            <view class="goods-detail">
+                <text class="title">{{item.goodsName}}</text>
+                <text class="info">{{item.content}}</text>
+                <view class="totals">¥{{item.price}}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="footer__btn" bindtap="submit">保存</view>

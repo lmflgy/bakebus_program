@@ -1,0 +1,10 @@
+{
+    "usingComponents": {
+        "m-header": "/components/m-header/m-header"
+    },
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "生日提醒列表",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 150
+}

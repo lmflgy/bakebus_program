@@ -1,0 +1,211 @@
+.goods-header {
+    width: 100%;
+    display: block;
+    background-color: #fff;
+    margin-bottom: 19rpx;
+
+    .goods-item {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 11rpx 25rpx;
+
+
+        .goods-time {
+            flex: 1;
+            display: block;
+
+            .picker-wrap {
+                width: 100%;
+                height: 72rpx;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background-color: #F6F6F6;
+                padding: 0 18rpx 0 20rpx;
+                font-size: 24rpx;
+
+                .text {
+                    margin-right: 10rpx;
+                }
+
+                .place {
+                    color: #808080;
+                }
+
+                .arrow {
+                    width: 18rpx;
+                    height: 12rpx;
+                    display: block;
+                }
+            }
+        }
+
+        .goods-time:last-child{
+            margin-left: 30rpx;
+        }
+    }
+}
+.wrap{
+    width: 100%;
+    display: block;
+    padding: 0 25rpx;
+    .item{
+        width: 100%;
+        line-height: 72rpx;
+        display: flex;
+        justify-content: space-between;
+        font-size: 28rpx;
+        position: relative;
+    }
+    .item::before{
+        content: '';
+        position: absolute;
+        left: 0;
+        right: -25rpx;
+        bottom: 0;
+        height: 1px;
+        overflow: hidden;
+        display: block;
+        background-color: #f5f5f5;
+    }
+}
+.order-temp {
+    width: 100%;
+    display: block;
+    margin-top: 30rpx;
+    padding: 0 25rpx;
+}
+
+.order-user {
+    width: 100%;
+    display: block;
+
+    .user-item {
+        width: 100%;
+        height: 150rpx;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .headimg {
+            width: 62rpx;
+            height: 62rpx;
+            display: block;
+        }
+
+        .nickname {
+            font-size: 30rpx;
+            font-weight: 700;
+            margin-left: 30rpx;
+        }
+
+        .tel {
+            flex: 1;
+            padding: 0 30rpx;
+            font-size: 26rpx;
+            color: #666;
+            text-align: right;
+        }
+
+        .arrow {
+            width: 30rpx;
+            height: 18rpx;
+            display: block;
+            transition: all .3s;
+        }
+
+        .arrow.sel {
+            transform: rotate(180deg);
+        }
+    }
+
+    .user-item::before {
+        content: '';
+        position: absolute;
+        left: -25rpx;
+        right: -25rpx;
+        bottom: 0;
+        height: 1px;
+        overflow: hidden;
+        display: block;
+        background-color: #f5f5f5;
+    }
+
+    .user-item::after {
+        content: '';
+        position: absolute;
+        left: -25rpx;
+        right: -25rpx;
+        top: 0;
+        height: 1px;
+        overflow: hidden;
+        display: block;
+        background-color: #f5f5f5;
+    }
+
+    .order-wrap {
+        width: 100%;
+        display: block;
+        transition: all .3s;
+        overflow: hidden;
+    }
+
+    .order-item {
+        width: 100%;
+        display: flex;
+        padding: 30rpx 0;
+        border-top: solid 1px #f5f5f5;
+
+        .photo {
+            width: 130rpx;
+            height: 130rpx;
+            display: block;
+            border-radius: 8rpx;
+        }
+
+        .detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 5rpx 0 5rpx 20rpx;
+            justify-content: space-between;
+
+            .title {
+                width: 100%;
+                display: block;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-size: 26rpx;
+                font-weight: 700;
+            }
+
+            .tips {
+                width: 100%;
+                display: block;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-size: 26rpx;
+                color: #666;
+            }
+
+            .price {
+                width: 100%;
+                font-size: 32rpx;
+                font-family: DIN Alternate;
+                font-weight: bold;
+                color: #333333;
+            }
+        }
+    }
+
+    .order-item:first-child {
+        border: 0;
+    }
+}
+
+.order-user:first-child::after {
+    display: none;
+}

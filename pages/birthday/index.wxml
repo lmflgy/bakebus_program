@@ -1,0 +1,36 @@
+<m-header title="{{title}}"></m-header>
+<view class="goods-header">
+    <view class="goods-item">
+        <view class="goods-search">
+            <image class="icon" src="../../image/search.png" />
+            <input class="input" type="text" maxlength="50" confirm-type="search" placeholder="搜索姓名" value="{{name}}" bindinput="handleInputName" bindconfirm="handleSearch" />
+        </view>
+        <view class="goods-search">
+            <image class="icon" src="../../image/search.png" />
+            <input class="input" type="text" maxlength="50" confirm-type="search" placeholder="搜索手机号" value="{{phone}}" bindinput="handleInputPhone" bindconfirm="handleSearch" />
+        </view>
+    </view>
+</view>
+<navigator class="item" wx:for="{{list}}" wx:key="index" hover-class="none" url="edit?pid={{item.pid}}">
+    <view class="dot" wx:if="{{item.top==1}}"></view>
+    <image class="headimg" src="../../image/birthday-item.png" />
+    <view class="detail">
+        <view class="hd">
+            <text>{{item.name}}</text>
+            <view class="time" wx:if="{{false}}">
+                <text>生日{{item.birthday}}</text>
+                <text wx:if="{{item.remindermethod==2&&item.lunarcalendar}}"> 农历{{item.lunarcalendar}}</text>
+            </view>
+        </view>
+        <view class="bd">
+            <text>{{item.phone}}</text>
+            <text class="rel" wx:if="{{item.relationship}}">{{item.relationship}}</text>
+        </view>
+        <view class="bd" wx:if="{{item.message}}">{{item.message}}</view>
+    </view>
+    <view class="tixing" catchtap="golist" data-pid="{{item.pid}}" data-uid="{{item.userId}}">生日提醒列表</view>
+    <view class="icon-wrap">
+        <image class="icon" src="../../image/arrow-right-mini.png" />
+    </view>
+</navigator>
+<image class="global__add" src="../../image/add.png" bindtap="edit" />

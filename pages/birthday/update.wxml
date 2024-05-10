@@ -1,0 +1,47 @@
+<m-header title="{{title}}"></m-header>
+<view class="form">
+    <view class="form-item">
+        <text>生日类型</text>
+        <picker class="input" mode="selector" value="{{current}}" range-key="key" range="{{mode}}" bindchange="bindModeChange">
+            <view class="input">
+                <text class="text">{{mode[current].key}}</text>
+                <image class="arrow" src="../../image/arrow-down-small.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="form-item">
+        <text wx:if="{{remindermethod==2}}">公历生日</text>
+        <text wx:else>生日</text>
+        <picker class="input" mode="date" value="{{birthday}}" bindchange="bindDateChange">
+            <view class="input">
+                <text class="text {{birthday==null?'place':''}}">{{birthday==null?'请选择':birthday}}</text>
+                <image class="arrow" src="../../image/arrow-down-small.png" />
+            </view>
+        </picker>
+    </view>
+    <view class="form-item" wx:if="{{remindermethod==2}}">
+        <text>农历</text>
+        <view class="inputbox">{{birthdayOld}}</view>
+    </view>
+    <view class="form-item">
+        <text>关系</text>
+        <input type="text" class="inputbox" placeholder="请输入" maxlength="20" value="{{relationship}}" bindinput="handleRelationship" data-key="relationship" />
+    </view>
+    <view class="form-item">
+        <text>备注</text>
+        <input type="text" class="inputbox" placeholder="请输入" maxlength="30" value="{{message}}" bindinput="handleMsg" data-key="message" />
+    </view>
+</view>
+<view class="form">
+    <view class="form-item">
+        <text>提醒时间</text>
+        <picker class="input" mode="selector" value="{{type}}" range-key="key" range="{{range}}" bindchange="bindTypeChange">
+            <view class="input">
+                <text class="text">{{range[type].key}}</text>
+                <image class="arrow" src="../../image/arrow-down-small.png" />
+            </view>
+        </picker>
+    </view>
+</view>
+<view class="delete__btn" bindtap="del" wx:if="{{pid}}">删除提醒</view>
+<view class="footer__btn" bindtap="submit">保存</view>

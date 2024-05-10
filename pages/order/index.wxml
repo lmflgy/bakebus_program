@@ -1,0 +1,179 @@
+<m-header title="{{title}}"></m-header>
+<view class="goods-header">
+    <view class="goods-item">
+        <view class="goods-search">
+            <image class="icon" src="../../image/search.png" />
+            <input class="input" type="text" maxlength="50" confirm-type="search" placeholder="姓名" value="{{searchValue}}" bindinput="handleInput" bindconfirm="handleSearch" />
+        </view>
+        <view class="goods-time">
+            <picker mode="selector" range="{{tab}}" range-key="label" value="{{tabid}}" bindchange="bindDaySwitch">
+                <view class="picker-wrap">
+                    <text class="text" wx:if="{{tabid != null}}">{{tab[tabid].label}}</text>
+                    <text class="text place" wx:else>类型</text>
+                    <image class="arrow" src="../../image/arrow-down.png" />
+                </view>
+            </picker>
+        </view>
+        <view class="goods-time" wx:if="{{orderStatus==-1}}">
+            <picker mode="selector" range="{{nav}}" range-key="key" value="{{osid}}" bindchange="bindOrderStatus">
+                <view class="picker-wrap">
+                    <text class="text" wx:if="{{osid != null}}">{{nav[osid].key}}</text>
+                    <text class="text place" wx:else>状态</text>
+                    <image class="arrow" src="../../image/arrow-down.png" />
+                </view>
+            </picker>
+        </view>
+        <view class="goods-time">
+            <picker mode="date" value="{{days}}" bindchange="bindDaySChange">
+                <view class="picker-wrap">
+                    <text class="text {{days?'':'place'}}">{{days?days:'开始日期'}}</text>
+                    <image class="arrow" src="../../image/arrow-down.png" />
+                </view>
+            </picker>
+        </view>
+        <view class="goods-time">
+            <picker mode="date" value="{{daye}}" bindchange="bindDayEChange">
+                <view class="picker-wrap">
+                    <text class="text {{daye?'':'place'}}">{{daye?daye:'结束日期'}}</text>
+                    <image class="arrow" src="../../image/arrow-down.png" />
+                </view>
+            </picker>
+        </view>
+    </view>
+</view>
+<block wx:if="{{nav!=null&&nav.length>0}}">
+    <block wx:if="{{roleid==2}}">
+        <view class="nav no">
+            <view class="nav-item {{item.value==orderStatus?'active':''}}" wx:for="{{nav}}" wx:key="index" bindtap="change" data-status="{{item.value}}">
+                <text>{{item.key}}</text>
+                <text class="hot" wx:if="{{item.value==7&&ishot}}"></text>
+            </view>
+        </view>
+    </block>
+    <block wx:else>
+        <view class="nav">
+            <view class="nav-item {{item.value==orderStatus?'active':''}}" wx:for="{{nav}}" wx:key="index" bindtap="change" data-status="{{item.value}}">
+                <text>{{item.key}}</text>
+                <text class="hot" wx:if="{{item.value==7&&ishot}}"></text>
+            </view>
+        </view>
+    </block>
+    <block wx:if="{{list!=null&&list.length>0}}">
+        <block wx:for="{{list}}" wx:key="index">
+        <view class="order-item" bindtap="goDetails" data-balance="{{item.balance}}" data-orderid="{{item.pid}}" wx:if="{{tab[tabid].value==item.orderType||tabid==null}}">
+            <block wx:if="{{item.orderType!=3}}">
+                <view class="order-time" wx:if="{{(item.orderStatus==8||item.orderStatus==1) &&(item.orderType !=4)}}">{{item.orderType==1?'预计取餐时间：':'预计送达时间：'}}{{item.reservationTime}}</view>
+                <view class="order-time" wx:if="{{item.calculateDeliveryTime}}">发货时间：{{item.calculateDeliveryTime}}之前</view>
+                <view class="order-time" wx:if="{{item.calculateFreezingTime}}">冷冻时间：{{item.calculateFreezingTime}}之前</view>
+            </block>
+            <view class="order-head">
+                <view class="tag" wx:if="{{item.orderType==3}}">快递</view>
+                <view class="tag" wx:elif="{{item.orderType==4}}">堂食</view>
+                <view class="tag" wx:else>{{item.orderType==1?'自提':'配送'}}</view>
+
+       
+
+
+                <view class="title">{{item.shopName}}</view>
+                <text class="state" wx:if="{{item.orderStatus==0}}">等待买家付款</text>
+                <text class="state" wx:elif="{{item.orderStatus==1}}">
+                    {{item.orderType==1?'待自提':'待发货'}}
+                </text>
+                <text class="state" wx:elif="{{item.orderStatus==2}}">待发货</text>
+                <text class="state" wx:elif="{{item.orderStatus==3}}">已完成</text>
+                <text class="state" wx:elif="{{item.orderStatus==4}}">已取消</text>
+                <text class="state" wx:elif="{{item.orderStatus==5}}">待处理</text>
+                <text class="state" wx:elif="{{item.orderStatus==6}}">退款成功</text>
+                <text class="state" wx:elif="{{item.orderStatus==7}}">买家已付款</text>
+                <text class="state" wx:elif="{{item.orderStatus==8}}">待制作</text>
+                <text class="state" wx:elif="{{item.orderStatus==11}}">配送中</text>
+                <text class="state" wx:elif="{{item.orderStatus==12}}">车配中</text>
+            </view>
+            <view class="order-no">
+                <text wx:if="{{item.orderSortNo}}">{{item.orderSortNo}}</text>
+                <text wx:else></text>
+                <text class="dz" wx:if="{{item.orderType==2&&item.shansongPrice&&item.shansongPrice>=30}}">{{item.shansongPrice>=30 ? '【打桩】' : ''}}</text>
+            </view>
+            <view class="order-goods" wx:if="{{item.orderDetails!=null&&item.orderDetails.length>0}}">
+                <view class="goods-item" wx:for="{{item.orderDetails}}" wx:for-item="goods" wx:for-index="goodsid" wx:key="goodsid">
+                    <image class="photo" src="{{gv.img+goods.images}}" />
+                    <view class="detail">
+                        <view class="lt">
+                            <text class="gt">{{goods.goodsName}}</text>
+                            <text class="gs" wx:if="{{goods.goodsSpec}}">{{goods.goodsSpec}}  {{goods.goodsSandwich}}</text>
+                            <text class="gs" wx:else>单品</text>
+                        </view>
+                        <view class="rt">
+                            <text class="gp">¥{{goods.price}}</text>
+                            <text class="gn">x{{goods.num}}</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="order-totals">
+                <text>{{item.orderTime}}</text>
+                <view>
+                    <text>共{{item.totalNum}}件商品 合计：</text>
+                    <text class="totals">¥{{item.totalPrice}}</text>
+                </view>
+            </view>
+            <view class="order-oper">
+                <block wx:if="{{item.orderStatus==1&&roleid!=2}}">
+                    <view class="order-btn disabled" catchtap="cancelOrder" data-orderid="{{item.pid}}" data-index="{{index}}">取消订单</view>
+                </block>
+                <block wx:if="{{item.orderType==3&&item.orderStatus==1}}">
+                    <view class="order-btn" catchtap="wuliu" data-orderid="{{item.pid}}" data-index="{{index}}">快递配送</view>
+                </block>
+                <block wx:if="{{item.orderType==2&&item.orderStatus==1&&roleid!=2}}">
+                    <view class="order-btn" catchtap="carOrder" data-orderid="{{item.pid}}" data-index="{{index}}">自叫车配</view>
+                    <view class="order-btn" catchtap="send" data-orderid="{{item.pid}}" data-index="{{index}}">立即发货</view>
+                </block>
+                <block wx:if="{{((item.orderStatus==1&&item.orderType!=2)||item.orderStatus==2)&&roleid!=2}}">
+                    <view class="order-btn" catchtap="ok" data-orderid="{{item.pid}}" data-index="{{index}}">
+                        <block wx:if="{{item.orderType==1}}">自提完成</block>
+                        <block wx:else>点我发货</block>
+                    </view>
+                </block>
+                <block wx:if="{{item.orderStatus==12}}">
+                    <view class="order-btn" catchtap="ok" data-orderid="{{item.pid}}" data-index="{{index}}">车配完成</view>
+                </block>
+                <block wx:if="{{item.orderType==3&&item.orderStatus==11}}">
+                    <view class="order-btn" catchtap="ok" data-orderid="{{item.pid}}" data-index="{{index}}">快递完成</view>
+                </block>
+                <block wx:if="{{item.orderStatus==7&&roleid!=2}}">
+                    <view class="order-btn" catchtap="takeOrder" data-orderid="{{item.pid}}" data-index="{{index}}">立即接单</view>
+                </block>
+                <block wx:if="{{item.orderStatus==8}}">
+                    <view class="order-btn disabled" catchtap="chooseWork" data-orderid="{{item.pid}}" data-index="{{index}}" wx:if="{{roleid==3}}">选裱花师</view>
+                    <view class="order-btn" catchtap="makeOver" data-orderType="{{item.orderType}}" data-orderid="{{item.pid}}" data-index="{{index}}">制作完成</view>
+                </block>
+                <block wx:if="{{item.orderStatus==4&&isDel&&roleid!=2}}">
+                    <view class="order-btn" catchtap="deleteOrder" data-orderid="{{item.pid}}" data-index="{{index}}">删除订单</view>
+                </block>
+                <block wx:if="{{item.orderStatus==5&&roleid!=2}}">
+                    <view class="order-btn disabled" catchtap="refuseRefund" data-orderid="{{item.pid}}" data-index="{{index}}">拒绝退款</view>
+                    <view class="order-btn" catchtap="agreeRefund" data-orderid="{{item.pid}}" data-index="{{index}}">同意退款</view>
+                </block>
+            </view>
+        </view>
+        </block>
+    </block>
+</block>
+<view class="nodata">到底了~</view>
+<!--选择裱花师-->
+<view class="pop-wrap {{isWork?'active':''}}" catchtouchmove="{{isWork}}">
+    <view class="pop-mask" bindtap="handleWork"></view>
+    <view class="pop__wrap">
+        <view class="pop__wrap-header">
+            <view class="header__btn cancel" bindtap="handleWork">取消</view>
+            <view class="header__btn confirm" bindtap="confirmWork">确定</view>
+        </view>
+        <scroll-view scroll-y="{{true}}" class="pop__wrap-wrap">
+            <view class="pop__data__item" wx:for="{{work}}" wx:key="index" bindtap="chooseItem" data-pid="{{item.pid}}">
+                <view class="text">{{item.username}}</view>
+                <image wx:if="{{item.pid==workid}}" class="icon" src="../../image/checked.png" />
+                <text class="icon" wx:else></text>
+            </view>
+        </scroll-view>
+    </view>
+</view>

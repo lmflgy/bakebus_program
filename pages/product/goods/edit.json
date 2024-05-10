@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+        "m-header": "/components/m-header/m-header"
+    },
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "新增产品"
+}

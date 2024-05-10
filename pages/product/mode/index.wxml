@@ -1,0 +1,61 @@
+<m-header title="{{title}}"></m-header>
+<view class="form">
+    <view class="form-item">
+        <text class="label">产品分类</text>
+        <view class="form-number">
+            <view class="decrease" bindtap="handleDecrease"></view>
+            <input type="number" class="numberse" maxlength="2" value="{{tempLen}}" bindinput="handleNumberse" bindblur="confirmNumberse" />
+            <view class="increase" bindtap="handleIncrease"></view>
+        </view>
+    </view>
+    
+    <view class="form-specs">
+        <block wx:if="{{list!=null&&list.length>0}}">
+          <view wx:for="{{list}}" wx:key="index" class="list" wx:for-item="ones">
+            <view class="specs-li" >
+              <view class="icon-wrap" bindtap="del" data-index="{{index}}" data-pid="{{ones.pid}}">
+                  <image class="icon" src="../../../image/jian.png" />
+              </view>
+              <text bind:tap="handleOne" data-index="{{index}}"  data-pid="{{ones.pid}}">一级分类名称</text>
+              <button class="btn-image" bindtap="upload" data-type="1"  data-index="{{index}}">上传图片</button>
+              <input type="text" class="input" placeholder="请输入" maxlength="10" value="{{ones.name}}" data-index="{{index}}" data-name="name" bindinput="handleInput" bindconfirm="confirmUpdate" confirm-type="done" />
+              <input type="text" class="sort" placeholder="排序编号" maxlength="8" value="{{ones.sort}}" data-index="{{index}}" data-name="sort" bindinput="handleSort" bindconfirm="confirmUpdate" confirm-type="done" />
+          </view>
+          <!-- 二级分类管理 -->
+          <view  class="add-btn"  wx:if="{{ones.boo}}"><button bind:tap="add" data-pid="{{ones.pid}}" data-index="{{index}}">添加</button></view> 
+          <block wx:if="{{ones.child!=null&&ones.child.length>0 &&ones.boo}}">
+          <view class="two-con" wx:for="{{ones.child}}" wx:for-item="twos" wx:for-index="childindex"  wx:key="childindex">
+           
+            <view class="specs-li" >
+              <view class="icon-wrap" bindtap="delTwo" data-index="{{index}}" data-pid="{{twos.pid}}" data-index-two="{{childindex}}">
+                  <image class="icon" src="../../../image/jian.png" />
+              </view>
+              <text>分类名称</text>
+              <button class="btn-image" data-type="2" bindtap="upload" data-childindex="{{childindex}}" data-index="{{index}}">上传图片</button>
+              <input type="text" class="input" placeholder="请输入" maxlength="10" value="{{twos.name}}" data-childindex="{{childindex}}" data-index="{{index}}" confirm-type="done" bindinput="handleInputs" bindconfirm="confirmUpdate"/>
+              <input type="text" class="sort" placeholder="排序编号" maxlength="8" value="{{twos.sort}}" data-childindex="{{childindex}}" data-index="{{index}}"  confirm-type="done" bindinput="handleSorts" bindconfirm="confirmUpdate"/>
+          </view>
+          </view>
+        </block>
+
+        </view>
+        
+        
+        </block>
+    
+        <block wx:if="{{temp!=null&&temp.length>0}}">
+        <view class="specs-li" wx:for="{{temp}}" wx:key="index">
+            <view class="icon-wrap" bindtap="delTemp" data-index="{{index}}">
+                <image class="icon" src="../../../image/jian.png" />
+            </view>
+            <text>一级分类名称</text>
+            <button class="btn-image" bindtap="uploads" data-type="1"  data-index="{{index}}">上传图片</button>
+            <input type="text" class="input" placeholder="请输入名称" maxlength="10" value="{{item.name}}" data-index="{{index}}" bindinput="handleInputTemp" confirm-type="done" />
+            <input type="text" class="sort" placeholder="排序编号" maxlength="8" value="{{item.sort}}" data-index="{{index}}" bindinput="handleInputSort" confirm-type="done" />
+        </view>
+        </block>
+    </view>
+</view>
+<view class="form-tips">* 输入分类名称及排序编号，编号越大排序越靠前</view>
+<!-- <view class="footer__btn" wx:if="{{tempLen>0}}" bindtap="submit">保存</view> -->
+<view class="footer__btn" bindtap="submit">保存</view>

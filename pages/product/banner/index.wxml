@@ -1,0 +1,45 @@
+<m-header title="{{title}}"></m-header>
+<view class="page-title">轮播图</view>
+<view class="upload-wrap">
+    <block wx:if="{{list!=null&&list.length>0}}">
+        <view class="item" wx:for="{{list}}" wx:key="index">
+            <image class="photo" src="{{gv.img+item.images}}" bindtap="goodsHandle" data-index="{{index}}" />
+            <image catchtap="del" data-index="{{index}}" class="del" src="../../../image/delete-fill.png" />
+        </view>
+    </block>
+    <block wx:if="{{Path!=null&&Path.length>0}}">
+        <view class="item" wx:for="{{Path}}" wx:key="index">
+            <image class="photo" src="{{gv.img+item}}" bindtap="goodsHandle" data-index="{{index}}" />
+            <image catchtap="delPath" data-index="{{index}}" class="del" src="../../../image/delete-fill.png" />
+        </view>
+    </block>
+    <navigator class="item" hover-class="none" url="edit" wx:if="{{Path.length+list.length<9}}">
+        <text>+</text>
+    </navigator>
+</view>
+<view class="upload-tips">* 请上传700px * 762px大小的轮播图片</view>
+<view class="footer__btn" wx:if="{{Path!=null&&Path.length>0}}" bindtap="submit">保存</view>
+<view class="goods-wrap {{isGoods?'active':''}}">
+    <view class="goods-close" bindtap="goodsHandle"></view>
+    <view class="goods-box">
+        <view class="goods-title">- 关联商品 -</view>
+        <view class="goods-list">
+            <view class="goods-li" wx:for="{{goods}}" wx:key="index" bindtap="chooseImte" data-index="{{index}}">
+                <view class="goods-choose">
+                    <image class="active" src="../../../image/choose-active.png" wx:if="{{item.IsChoose}}" />
+                    <image class="none" src="../../../image/choose-none.png" wx:else />
+                </view>
+                <image class="goods-photo" src="{{item.images}}" mode="aspectFit"></image>
+                <view class="goods-detail">
+                    <text class="title">{{item.goodsName}}</text>
+                    <text class="info">{{item.content}}</text>
+                    <view class="totals">¥{{item.price}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="goods-btns">
+            <view class="btn" bindtap="goodsHandle">取消</view>
+            <view class="btn confirm" bindtap="bannerUpdate">确定</view>
+        </view>
+    </view>
+</view>

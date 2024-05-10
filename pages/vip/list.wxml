@@ -1,0 +1,10 @@
+<m-header title="{{title}}"></m-header>
+<view class="page-line"></view>
+<view class="item" wx:for="{{list}}" wx:key="index">
+    <image class="icon" src="{{gv.img+item.icon}}" />
+    <view class="detail">
+        <text class="title">{{item.serverName}}</text>
+    </view>
+    <image class="edit" src="../../image/service-edit.png" bindtap="goEdit" data-pid="{{item.pid}}" />
+</view>
+<image class="global__add" src="../../image/add.png" bindtap="edit" />
